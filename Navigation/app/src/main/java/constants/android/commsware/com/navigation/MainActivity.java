@@ -1,6 +1,10 @@
 package constants.android.commsware.com.navigation;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -16,7 +20,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import DTO.Record;
 
 
 public class MainActivity extends ActionBarActivity
@@ -32,6 +46,11 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    ArrayList<Record> mRecords = new ArrayList<Record>();
+
+    ListView mListTimeLine;
+    RecordAdapter mTimelineAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +61,17 @@ public class MainActivity extends ActionBarActivity
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        //String userName, String rivalName, String runningDate, String endTime, boolean isWin
+        mRecords.add(new Record("A", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
+        mRecords.add(new Record("", "Mio", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
+        mRecords.add(new Record("A", "Red eyes", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
+        mRecords.add(new Record("", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
+
+        mListTimeLine = (ListView)findViewById(R.id.list_timeline);
+        mTimelineAdapter = new RecordAdapter(this, R.id.list_timeline, mRecords);
+        mListTimeLine.setAdapter(mTimelineAdapter);
     }
 
     @Override
@@ -76,7 +103,6 @@ public class MainActivity extends ActionBarActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,6 +161,9 @@ public class MainActivity extends ActionBarActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+
+
             return rootView;
         }
 
@@ -146,4 +175,87 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    //for Timeline CustomListAdapter
+    class RecordAdapter extends ArrayAdapter<Record> {
+        private Context mContext;
+        int mlayoutResourceId;
+        private ArrayList<Record> mItems;
+
+        public RecordAdapter(Context context, int layoutResourceId, ArrayList<Record> items) {
+            super(context, layoutResourceId, items);
+
+            this.mContext = context;
+            this.mlayoutResourceId = layoutResourceId;
+            this.mItems = items;
+        }
+
+        //for customAdapter extends BaseAdapter
+        //public int getCount() {
+        //    return mItems.size();
+        //}
+
+        //public Record getItem(int position) {
+        //    return mItems.get(position);
+        //}
+
+        //public long getItemId(int position) {
+        //    return position;
+        //}
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            ViewHolder mHholder = null;
+
+            if (row == null) {
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.item_record_list, null);
+
+                mHholder = new ViewHolder();
+                mHholder.pic = (ImageView)row.findViewById(R.id.img_record_pic);
+                mHholder.date = (TextView)row.findViewById(R.id.text_record_date);
+                mHholder.time = (TextView)row.findViewById(R.id.text_record_time);
+                mHholder.isNew = (TextView)row.findViewById(R.id.text_record_new);
+                mHholder.result = (TextView)row.findViewById(R.id.text_record_result);
+
+                row.setTag(mHholder);
+            }
+            else { mHholder = (ViewHolder)row.getTag(); }
+
+            //holder.date.setText("");
+
+            return row;
+        }
+
+        //picture loaing type?
+        //private static class ThumbnailTask extends AsyncTask<Void, Void, Cursor> {
+        //    private int mPosition;
+        //    private ViewHolder mHolder;
+
+        //    public ThumbnailTask(int position, ViewHolder holder) {
+                mPosition = position;
+                mHolder = holder;
+        //    }
+
+            protected Cursor doInBackground(Void... arg0) {
+//                Glide.with(GlideFragment.this)
+//                        .load("https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png")
+//                        .into(imgGlide);
+            }
+
+            protected void onPostExcute(Bitmap bitmap) {
+                if (mHolder.position == mPosition)
+                    mHolder.pic.setImageBitmap(bitmap);
+
+            }
+        }
+    }
+
+    private static class ViewHolder {
+        ImageView pic;
+        TextView date;
+        TextView time;
+        TextView isNew;
+        TextView result;
+        int position;
+    }
 }

@@ -10,4 +10,29 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
+    <!-- record text -->
+    <string name="text_today">TODAY</string>
+
+    <string name="text_win_rate">Win</string>
+
+    <!-- record distance unit -->
+    <string name="text_meter">m</string>
+    <string name="text_kilometer">km</string>
+
+    <!-- rival mode -->
+    <string name="text_basic">Basic</string>
+    <string name="text_normal">Normal</string>
+    <string name="text_hard">Hard</string>
+    <string name="text_event">Event</string>
+
+    <!-- rival status -->
+    <string name="text_goal">goal</string>
+    <string name="text_speed">speed</string>
+
+    <!-- record text -->
+    <string name="text_win">를 이겼습니다</string>
+    <string name="text_lose">에게 졌습니다</string>
+
+    <string name="text_new">NEW</string>
+
 </resources>
