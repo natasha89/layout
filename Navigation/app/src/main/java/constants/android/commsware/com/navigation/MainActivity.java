@@ -1,7 +1,5 @@
 package constants.android.commsware.com.navigation;
 
-
-import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -13,24 +11,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import DTO.NavDrawerItem;
-import DTO.Record;
 
 
 public class MainActivity extends ActionBarActivity
@@ -42,10 +32,7 @@ public class MainActivity extends ActionBarActivity
     private ListView mLvDrawerMenu;
     private NavDrawerListAdapter mDrawerMenuAdapter;
 
-    ArrayList<Record> mRecords = new ArrayList<Record>();
 
-    ListView mListTimeLine;
-    RecordAdapter mTimelineAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,20 +43,10 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLvDrawerMenu = (ListView) findViewById(R.id.list_slidermenu);
 
-        // Constructor parameter : String userName, String rivalName, String runningDate, String endTime, boolean isWin
-        mRecords.add(new Record("A", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
-        mRecords.add(new Record("", "Mio", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
-        mRecords.add(new Record("A", "Red eyes", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
-        mRecords.add(new Record("", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
-
-        mListTimeLine = (ListView) findViewById(R.id.list_timeline);
-        mTimelineAdapter = new RecordAdapter(this, R.id.list_timeline, mRecords);
-        mListTimeLine.setAdapter(mTimelineAdapter);
-
         mToolbar.setLogo(R.drawable.abc_btn_check_material);
         mToolbar.setTitle("Main");
         mToolbar.setSubtitle("Sub title");
-        //setSupportActionBar(mToolbar); // Show settings.
+        setSupportActionBar(mToolbar); // Show settings.
 
         List<NavDrawerItem> menuItems = generateDrawerMenuItems();
         mDrawerMenuAdapter = new NavDrawerListAdapter(getApplicationContext(), menuItems);
@@ -93,26 +70,24 @@ public class MainActivity extends ActionBarActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            setFragment(0, BikeFragment.class);
+            setFragment(0, UserInfoFragment.class);
         }
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                setFragment(0, BikeFragment.class);
+                setFragment(0, UserInfoFragment.class);
                 break;
             case 1:
-                setFragment(1, BusFragment.class);
+                setFragment(1, BikeFragment.class);
                 break;
             case 2:
-                setFragment(2, CarFragment.class);
+                setFragment(2, BusFragment.class);
                 break;
             case 3:
-                mDrawerLayout.closeDrawer(mLvDrawerMenu);
-                mLvDrawerMenu.invalidateViews();
+                setFragment(3, CarFragment.class);
                 break;
             case 4:
                 mDrawerLayout.closeDrawer(mLvDrawerMenu);
@@ -185,57 +160,5 @@ public class MainActivity extends ActionBarActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return true;
-    }
-
-    //for Timeline CustomListAdapter
-    class RecordAdapter extends ArrayAdapter<Record> {
-        private Context mContext;
-        int mlayoutResourceId;
-        private ArrayList<Record> mItems;
-
-        public RecordAdapter(Context context, int layoutResourceId, ArrayList<Record> items) {
-            super(context, layoutResourceId, items);
-
-            this.mContext = context;
-            this.mlayoutResourceId = layoutResourceId;
-            this.mItems = items;
-        }
-
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View row = convertView;
-            ViewHolder mHholder = null;
-
-            if (row == null) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                row = inflater.inflate(R.layout.item_record_list, null);
-
-                mHholder = new ViewHolder();
-                mHholder.pic = (ImageView) row.findViewById(R.id.img_record_pic);
-                mHholder.date = (TextView) row.findViewById(R.id.text_record_date);
-                mHholder.time = (TextView) row.findViewById(R.id.text_record_time);
-                mHholder.isNew = (TextView) row.findViewById(R.id.text_record_new);
-                mHholder.result = (TextView) row.findViewById(R.id.text_record_result);
-
-                row.setTag(mHholder);
-            } else {
-                mHholder = (ViewHolder) row.getTag();
-            }
-
-            return row;
-        }
-<<<<<<< HEAD
-=======
-
->>>>>>> 2e45b62db23f74127e2d585807e2c0851a2a4c5c
-    }
-
-    private static class ViewHolder {
-        ImageView pic;
-        TextView date;
-        TextView time;
-        TextView isNew;
-        TextView result;
-        int position;
     }
 }

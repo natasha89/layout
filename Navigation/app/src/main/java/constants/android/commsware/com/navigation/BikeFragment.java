@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 public class BikeFragment extends Fragment {
 
-
     public BikeFragment() {
         // Required empty public constructor
     }

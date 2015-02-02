@@ -1,5 +1,8 @@
 package DTO;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by mj on 15. 1. 30.
  */
@@ -86,5 +89,18 @@ public class Record {
 
     public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public ArrayList<Record> getAllPersonalRecord() {
+        //need query : select all ~
+        return null;
+    }
+
+    public boolean[] getAllIsWin() {
+
+        //need query 2 : select field
+        boolean[] allIsWin = new boolean[getAllPersonalRecord().size()];
+
+        return allIsWin;
     }
 }
