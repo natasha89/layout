@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        //String userName, String rivalName, String runningDate, String endTime, boolean isWin
+        // Constructor parameter : String userName, String rivalName, String runningDate, String endTime, boolean isWin
         mRecords.add(new Record("A", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
         mRecords.add(new Record("", "Mio", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
         mRecords.add(new Record("A", "Red eyes", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
@@ -221,32 +221,7 @@ public class MainActivity extends ActionBarActivity
             }
             else { mHholder = (ViewHolder)row.getTag(); }
 
-            //holder.date.setText("");
-
             return row;
-        }
-
-        //picture loaing type?
-        //private static class ThumbnailTask extends AsyncTask<Void, Void, Cursor> {
-        //    private int mPosition;
-        //    private ViewHolder mHolder;
-
-        //    public ThumbnailTask(int position, ViewHolder holder) {
-                mPosition = position;
-                mHolder = holder;
-        //    }
-
-            protected Cursor doInBackground(Void... arg0) {
-//                Glide.with(GlideFragment.this)
-//                        .load("https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png")
-//                        .into(imgGlide);
-            }
-
-            protected void onPostExcute(Bitmap bitmap) {
-                if (mHolder.position == mPosition)
-                    mHolder.pic.setImageBitmap(bitmap);
-
-            }
         }
     }
 
