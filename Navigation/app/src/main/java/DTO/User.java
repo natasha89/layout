@@ -1,17 +1,11 @@
 package DTO;
 
-import android.graphics.Bitmap;
-
-/**
- * Created by mj on 15. 1. 30.
- */
-public class UserInfo {
+public class User {
 
     String name;
     String email;
 
-    //사진이 멤버변수로 있어야 할까?...
-    Bitmap avatar;
+    int pic;
 
     double weight;
     double height;
@@ -37,12 +31,12 @@ public class UserInfo {
         this.email = email;
     }
 
-    public Bitmap getAvatar() {
-        return avatar;
+    public int getPic() {
+        return pic;
     }
 
-    public void setAvatar(Bitmap avatar) {
-        this.avatar = avatar;
+    public void setPic(int pic) {
+        this.pic = pic;
     }
 
     public double getWeight() {

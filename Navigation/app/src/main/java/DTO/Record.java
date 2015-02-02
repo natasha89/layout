@@ -1,11 +1,7 @@
 package DTO;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-/**
- * Created by mj on 15. 1. 30.
- */
 public class Record {
 
     String userName;
