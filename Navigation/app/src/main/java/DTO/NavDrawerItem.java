@@ -8,7 +8,7 @@ public class NavDrawerItem {
     private int mIcon;
 
     public String getText() {
-        return mText;
+return mText;
     }
 
     public void setText(String mText) {

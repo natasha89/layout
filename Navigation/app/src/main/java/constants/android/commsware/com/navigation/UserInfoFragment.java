@@ -1,9 +1,10 @@
 package constants.android.commsware.com.navigation;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import java.util.Date;
 import DTO.Record;
 
 public class UserInfoFragment extends Fragment {
-
+    String tag = "UserInfoFragment";
     public UserInfoFragment() {
         // Required empty public constructor
     }
@@ -53,13 +54,14 @@ public class UserInfoFragment extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment fragment = new SelectRivalFragment();
-                //ft.hide(view.getfr);
+                Fragment f = new UserInfoFragment();
+                ft.hide(f);
                 ft.replace(R.id.container, fragment, "select Rival");
                 ft.addToBackStack(null);
                 ft.commit();
             }
         });
-
+        Log.d(tag, "UserInfoFragment");
         return view;
     }
 

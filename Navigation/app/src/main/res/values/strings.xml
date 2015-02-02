@@ -2,9 +2,6 @@
 <resources>
 
     <string name="app_name">Navigation</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -58,4 +55,9 @@
 
     <string name="text_new">NEW</string>
 
+    <string name="text_agree1">이것은 이것이고 저것은 저것이니라 ㅇ\n;ㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\nㅇ\n;ㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\nㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\n</string>
+    <string name="checkbox_agree1">동의? Call? 콜? 고? ㄱㄱ? </string>
+    <string name="text_agree2">게임을 할라면 영혼도 털리고 개인정보도 털려야 하느니 ㅇ\n;ㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\nㅇ\n;ㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\nㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\nㅇ\nㅋ\nㅋ\nㅇ\nㅇ\nㅋ\nㅋ\nㅋ\n</string>
+    <string name="checkbox_agree2">레알? Real? 리얼? 진짜? 정말?</string>
+    <string name="btn_next">Next</string>
 </resources>

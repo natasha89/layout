@@ -32,8 +32,6 @@ public class MainActivity extends ActionBarActivity
     private ListView mLvDrawerMenu;
     private NavDrawerListAdapter mDrawerMenuAdapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +44,7 @@ public class MainActivity extends ActionBarActivity
         mToolbar.setLogo(R.drawable.abc_btn_check_material);
         mToolbar.setTitle("Main");
         mToolbar.setSubtitle("Sub title");
-        setSupportActionBar(mToolbar); // Show settings.
+        setSupportActionBar(mToolbar); // Show actionbar settings.
 
         List<NavDrawerItem> menuItems = generateDrawerMenuItems();
         mDrawerMenuAdapter = new NavDrawerListAdapter(getApplicationContext(), menuItems);
