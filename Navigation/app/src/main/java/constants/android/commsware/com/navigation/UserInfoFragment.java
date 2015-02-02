@@ -16,17 +16,22 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import DTO.Record;
 
 public class UserInfoFragment extends Fragment {
+<<<<<<< HEAD
     String tag = "UserInfoFragment";
     public UserInfoFragment() {
         // Required empty public constructor
     }
 
     ArrayList<Record> mRecords = new ArrayList<Record>();
+=======
+    ArrayList<Record> mRecords;
+>>>>>>> 3f817956216ab8842e6ed550fafcc0430a1efe82
 
     ListView mListTimeLine;
     RecordAdapter mTimelineAdapter;
@@ -37,13 +42,21 @@ public class UserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_userinfo, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_info, container, false);
 
         // Constructor parameter : String userName, String rivalName, String runningDate, String endTime, boolean isWin
+        mRecords = new ArrayList<Record>();
+
+        // set test data
         mRecords.add(new Record("A", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
         mRecords.add(new Record("", "Mio", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
-        mRecords.add(new Record("A", "Red eyes", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
-        mRecords.add(new Record("", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), false));
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        mRecords.add(new Record("A", "Red eyes", new SimpleDateFormat("yyyy MM dd").format(cal.getTime()), new SimpleDateFormat("HH mm").format(new Date()), false));
+
+        cal.add(Calendar.DATE, -5);
+        mRecords.add(new Record("", "Foxy", new SimpleDateFormat("yyyy MM dd").format(cal.getTime()), new SimpleDateFormat("HH mm").format(new Date()), false));
 
         mListTimeLine = (ListView) view.findViewById(R.id.list_timeline);
         mTimelineAdapter = new RecordAdapter(view.getContext(), R.id.list_timeline, mRecords);
@@ -53,10 +66,18 @@ public class UserInfoFragment extends Fragment {
         mBtnStart.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+<<<<<<< HEAD
                 Fragment fragment = new SelectRivalFragment();
                 Fragment f = new UserInfoFragment();
                 ft.hide(f);
                 ft.replace(R.id.container, fragment, "select Rival");
+=======
+
+                // hide x
+                Fragment newFragment = new SelectModeFragment();
+                ft.replace(R.id.container, newFragment, "select Rival");
+
+>>>>>>> 3f817956216ab8842e6ed550fafcc0430a1efe82
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -65,7 +86,7 @@ public class UserInfoFragment extends Fragment {
         return view;
     }
 
-    //for Timeline CustomListAdapter
+    //for User Timeline CustomListAdapter
     class RecordAdapter extends ArrayAdapter<Record> {
         private Context mContext;
         int mlayoutResourceId;
@@ -81,47 +102,57 @@ public class UserInfoFragment extends Fragment {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             View row = convertView;
-            ViewHolder mHolder = null;
+            RecordHolder mHolder = null;
 
             if (row == null) {
-                LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 row = inflater.inflate(R.layout.item_record_list, null);
 
-                mHolder = new ViewHolder();
+                mHolder = new RecordHolder();
                 mHolder.pic = (ImageView) row.findViewById(R.id.img_record_pic);
                 mHolder.date = (TextView) row.findViewById(R.id.text_record_date);
                 mHolder.time = (TextView) row.findViewById(R.id.text_record_time);
                 mHolder.isNew = (TextView) row.findViewById(R.id.text_record_new);
                 mHolder.result = (TextView) row.findViewById(R.id.text_record_result);
 
-                setResult(mHolder, mItems.get(position));
-
                 row.setTag(mHolder);
+
             } else {
-                mHolder = (ViewHolder) row.getTag();
+                mHolder = (RecordHolder) row.getTag();
             }
+
+            // need to change by how to set image resource
+            mHolder.pic.setImageResource(R.drawable.q);
+
+            mHolder.date.setText(mItems.get(position).getRunningDate());
+            mHolder.time.setText(mItems.get(position).getEndTime());
+
+            // need to change by how to know new record
+            //if(new condition) {
+            //    mHolder.isNew.setVisibility(View.VISIBLE);
+            //}
+
+            setResult(mHolder, mItems.get(position));
 
             return row;
         }
 
-        private void setResult(ViewHolder holder, Record item) {
+        private void setResult(RecordHolder holder, Record item) {
 
             if (item.isWin()) {
                 holder.result.setText(item.getUserName() + "가 " + item.getRivalName() + getString(R.string.text_win));
-                if(item.getUserName().equals(""))
+                if (item.getUserName().equals(""))
                     holder.result.setText(item.getRivalName() + getString(R.string.text_win));
-            }
-            else
+            } else
                 holder.result.setText(item.getRivalName() + getString(R.string.text_lose));
         }
     }
 
-    private static class ViewHolder {
+    private static class RecordHolder {
         ImageView pic;
         TextView date;
         TextView time;
         TextView isNew;
         TextView result;
-        int position;
     }
 }
