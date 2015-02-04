@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#BCE55C"
+    tools:context="com.icetea09.demomaterialdesigndrawermenu.MyRecordFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight=".75"
+            android:background="@color/color_user_background"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/ln_my_today_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_today" />
+
+                <TextView
+                    android:id="@+id/text_my_today_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="10.294" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ln_my_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_win_rate" />
+
+                <TextView
+                    android:id="@+id/text_my_win_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="86%" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ln_my_record"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_my_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:text="username"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/image_my_pic"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:src="@drawable/q" />
+
+                <TextView
+                    android:id="@+id/text_my_total_earth_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center"
+                    android:text="@string/text_earth_distance"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/text_my_total_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="9800km"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/list_my_timeline"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".25" />
+
+    </LinearLayout>
+
+</FrameLayout>

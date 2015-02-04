@@ -3,6 +3,7 @@ package constants.android.commsware.com.navigation;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,11 @@ public class UserInfoFragment extends Fragment {
 
     Button mBtnStart;
 
+    Toolbar mToolbar;
+
+    // To confirm first fragment Create
+    boolean mIsFirst = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -36,7 +42,6 @@ public class UserInfoFragment extends Fragment {
         // Constructor parameter : String userName, String rivalName, String runningDate, String endTime, boolean isWin
         mRecords = new ArrayList<Record>();
 
-        // set test data
         mRecords.add(new Record("A", "Foxy", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
         mRecords.add(new Record("", "Mio", new SimpleDateFormat("yyyy MM dd").format(new Date()), new SimpleDateFormat("HH mm").format(new Date()), true));
 
@@ -47,16 +52,17 @@ public class UserInfoFragment extends Fragment {
         cal.add(Calendar.DATE, -5);
         mRecords.add(new Record("", "Foxy", new SimpleDateFormat("yyyy MM dd").format(cal.getTime()), new SimpleDateFormat("HH mm").format(new Date()), false));
 
+        // Set ListView & List Adapter
         mListTimeLine = (ListView) view.findViewById(R.id.list_timeline);
         mTimelineAdapter = new RecordAdapter(view.getContext(), R.id.list_timeline, mRecords);
         mListTimeLine.setAdapter(mTimelineAdapter);
 
+        // Set Game Start Button & listener
         mBtnStart = (Button) view.findViewById(R.id.btn_start);
         mBtnStart.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                // hide x
                 Fragment newFragment = new SelectModeFragment();
                 ft.replace(R.id.container, newFragment, "select Rival");
 
@@ -64,6 +70,26 @@ public class UserInfoFragment extends Fragment {
                 ft.commit();
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!mIsFirst) {
+            mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            mToolbar.getMenu().findItem(R.id.action_my_record).setVisible(true);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mIsFirst) {
+            mIsFirst = false;
+        }
     }
 }

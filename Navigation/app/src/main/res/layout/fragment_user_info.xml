@@ -19,13 +19,6 @@
             android:background="@color/color_user_background"
             android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/img_my_record"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_drawer" />
-
             <LinearLayout
                 android:id="@+id/ln_record_user"
                 android:layout_width="fill_parent"
