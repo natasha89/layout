@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +23,6 @@ import java.util.List;
 
 import DTO.NavDrawerItem;
 
-
 public class MainActivity extends ActionBarActivity
         implements AdapterView.OnItemClickListener {
 
@@ -31,6 +31,8 @@ public class MainActivity extends ActionBarActivity
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mLvDrawerMenu;
     private NavDrawerListAdapter mDrawerMenuAdapter;
+
+    boolean mToggleFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +58,10 @@ public class MainActivity extends ActionBarActivity
             public void onDrawerClosed(View view) {
                 mToolbar.setTitle("Main");
                 mToolbar.setSubtitle("Sub title");
-                invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
                 mToolbar.setTitle("Open ToolBar");
-                invalidateOptionsMenu();
             }
         };
 
@@ -103,6 +103,7 @@ public class MainActivity extends ActionBarActivity
         if (mDrawerLayout.isDrawerOpen(mLvDrawerMenu)) {
             mDrawerLayout.closeDrawer(mLvDrawerMenu);
         } else {
+            // dialog
             super.onBackPressed();
         }
     }
@@ -158,5 +159,35 @@ public class MainActivity extends ActionBarActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return true;
+    }
+
+    // Set ToolBar (instead of Action Bar) icon : using munu item
+    public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager frMgr = getSupportFragmentManager();
+        FragmentTransaction fr = frMgr.beginTransaction();
+        Fragment newFragment;
+
+        // Set Toggle
+        switch (item.getItemId()) {
+            case R.id.action_my_record:
+                if (!mToggleFlag) {
+                    newFragment = new MyRecordFragment();
+                    fr.replace(R.id.container, newFragment, "My Record");
+
+                    mToggleFlag = true;
+                }
+                else {
+                    newFragment = new UserInfoFragment();
+                    fr.replace(R.id.container, newFragment, "My Timeline");
+
+                    mToggleFlag = false;
+                }
+
+                fr.commit();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

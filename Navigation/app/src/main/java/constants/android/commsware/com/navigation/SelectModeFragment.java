@@ -1,24 +1,22 @@
 package constants.android.commsware.com.navigation;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import DTO.Rival;
+
+import ListAdapter.RivalAdapter;
 
 public class SelectModeFragment extends Fragment {
 
@@ -29,11 +27,17 @@ public class SelectModeFragment extends Fragment {
     ListView mListSelectMode;
     RivalAdapter mSelectModeAdapter;
 
+    Toolbar mToolbar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_mode, container, false);
+
+        // Set Toolbar icon Visiblity : false
+        mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        mToolbar.getMenu().findItem(R.id.action_my_record).setVisible(false);
 
         // Constructor parameter : String name, int avatar, String mode, String goalTime, String speed
         mRivals = new ArrayList<Rival>();
@@ -43,17 +47,20 @@ public class SelectModeFragment extends Fragment {
         mRivals.add(new Rival("Red Eyes", R.drawable.q, getString(R.string.text_hard), "2:00", "4/5"));
         mRivals.add(new Rival("Cheetan", R.drawable.q, getString(R.string.text_event), "4:00", "3/5"));
 
+        // Set ListView & List Adapter
         mListSelectMode = (ListView) view.findViewById(R.id.list_selectMode);
         mSelectModeAdapter = new RivalAdapter(view.getContext(), R.id.list_selectMode, mRivals);
         mListSelectMode.setAdapter(mSelectModeAdapter);
 
+        // Set ListItemClickListener
         mListSelectMode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
 
+                // To delivery rival name next Fragment (RivalInfoFragment)
                 Bundle arguments = new Bundle();
-                TextView name = (TextView)view.findViewById(R.id.text_rival_name);
+                TextView name = (TextView) view.findViewById(R.id.text_rival_name);
                 arguments.putString("name", name.getText().toString());
 
                 Fragment newFragment = new RivalInfoFragment();
@@ -66,62 +73,5 @@ public class SelectModeFragment extends Fragment {
         });
 
         return view;
-    }
-
-    //for Select Mode CustomListAdapter
-    class RivalAdapter extends ArrayAdapter<Rival> {
-        private Context mContext;
-        int mlayoutResourceId;
-        private ArrayList<Rival> mItems;
-
-        public RivalAdapter(Context context, int layoutResourceId, ArrayList<Rival> items) {
-            super(context, layoutResourceId, items);
-
-            this.mContext = context;
-            this.mlayoutResourceId = layoutResourceId;
-            this.mItems = items;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View row = convertView;
-            RivalHolder mHolder = null;
-
-            if (row == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                row = inflater.inflate(R.layout.item_rival_list, null);
-
-                mHolder = new RivalHolder();
-                Log.d(TAG, mHolder.toString());
-
-                mHolder.pic = (ImageView) row.findViewById(R.id.img_rival_pic);
-                mHolder.name = (TextView) row.findViewById(R.id.text_rival_name);
-                mHolder.mode = (TextView) row.findViewById(R.id.text_rival_mode);
-                mHolder.speed = (TextView) row.findViewById(R.id.text_rival_speed);
-                mHolder.goal = (TextView) row.findViewById(R.id.text_rival_goal);
-
-                row.setTag(mHolder);
-
-            } else {
-                mHolder = (RivalHolder) row.getTag();
-            }
-
-            // need to change by how to set image resource
-            mHolder.pic.setImageResource(mItems.get(position).getPic());
-
-            mHolder.name.setText(mItems.get(position).getName());
-            mHolder.mode.setText(mItems.get(position).getMode());
-            mHolder.speed.setText(mItems.get(position).getSpeed());
-            mHolder.goal.setText(mItems.get(position).getGoalTime());
-
-            return row;
-        }
-    }
-
-    private static class RivalHolder {
-        ImageView pic;
-        TextView name;
-        TextView mode;
-        TextView speed;
-        TextView goal;
     }
 }
