@@ -22,16 +22,10 @@ import java.util.Date;
 import DTO.Record;
 
 public class UserInfoFragment extends Fragment {
-<<<<<<< HEAD
-    String tag = "UserInfoFragment";
-    public UserInfoFragment() {
-        // Required empty public constructor
-    }
 
-    ArrayList<Record> mRecords = new ArrayList<Record>();
-=======
+    String tag = "UserInfoFragment";
+
     ArrayList<Record> mRecords;
->>>>>>> 3f817956216ab8842e6ed550fafcc0430a1efe82
 
     ListView mListTimeLine;
     RecordAdapter mTimelineAdapter;
@@ -66,18 +60,13 @@ public class UserInfoFragment extends Fragment {
         mBtnStart.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-<<<<<<< HEAD
-                Fragment fragment = new SelectRivalFragment();
-                Fragment f = new UserInfoFragment();
-                ft.hide(f);
-                ft.replace(R.id.container, fragment, "select Rival");
-=======
+
 
                 // hide x
                 Fragment newFragment = new SelectModeFragment();
                 ft.replace(R.id.container, newFragment, "select Rival");
 
->>>>>>> 3f817956216ab8842e6ed550fafcc0430a1efe82
+
                 ft.addToBackStack(null);
                 ft.commit();
             }
